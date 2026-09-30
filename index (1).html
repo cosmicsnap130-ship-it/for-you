@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sirf Tere Liye 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0d0a14;
+    --deep: #150f22;
+    --violet: #2d1b4e;
+    --lavender: #8b6bb1;
+    --blush: #e8a0bf;
+    --gold: #f0c07a;
+    --white: #fdf6ff;
+    --dim: rgba(200, 0, 255, 0.55);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: var(--night);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ── PAGES ── */
+  .page {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.9s ease;
+    padding: 2rem;
+    text-align: center;
+  }
+  .page.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── STARS ── */
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: var(--white);
+    animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+    opacity: 0.4;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.6); }
+  }
+
+  /* ── PAGE 1 ── */
+  #p1 { background: radial-gradient(ellipse at center, #1a0f2e 0%, var(--night) 70%); z-index: 1; }
+  .envelope {
+    font-size: 5rem;
+    animation: float 3s ease-in-out infinite;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .p1-hint {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    color: var(--dim);
+    margin-top: 1.4rem;
+    text-transform: uppercase;
+  }
+  .glow-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--blush);
+    margin-bottom: 2rem;
+    line-height: 1.4;
+  }
+
+  /* ── PAGE 2 ── */
+  #p2 { background: radial-gradient(ellipse at 30% 60%, #1e0d36 0%, var(--night) 65%); z-index: 1; }
+  .shayari-block {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .shayari {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    line-height: 2;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .shayari.visible { opacity: 1; transform: translateY(0); }
+  .shayari span { color: var(--blush); }
+  .divider {
+    width: 40px; height: 1px;
+    background: var(--lavender);
+    margin: 2rem auto;
+    opacity: 0.5;
+  }
+
+  /* ── PAGE 3 — GIFT BOX ── */
+  #p3 { background: radial-gradient(ellipse at center, #1d0a30 0%, var(--night) 70%); z-index: 1; }
+  .gift-wrap {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+  }
+  .gift-box {
+    font-size: 6rem;
+    display: block;
+    animation: pulse 1.8s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+  .gift-wrap:hover .gift-box { transform: scale(1.08) rotate(-3deg); }
+  @keyframes pulse {
+    0%, 100% { filter: drop-shadow(0 0 6px #e8a0bf44); }
+    50% { filter: drop-shadow(0 0 22px #e8a0bfaa); }
+  }
+  .gift-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--dim);
+    margin-top: 1.2rem;
+  }
+  .shake { animation: shake 0.5s ease !important; }
+  @keyframes shake {
+    0%,100%{transform:rotate(0)}
+    20%{transform:rotate(-8deg) scale(1.05)}
+    40%{transform:rotate(8deg) scale(1.08)}
+    60%{transform:rotate(-5deg) scale(1.05)}
+    80%{transform:rotate(4deg)}
+  }
+
+  /* ── PAGE 4 — REVEAL ── */
+  #p4 { background: radial-gradient(ellipse at center, #25103f 0%, var(--night) 70%); z-index: 1; }
+  .reveal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-style: normal;
+  }
+  .surprise-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 6vw, 3rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  .heart-rain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .falling-heart {
+    position: absolute;
+    top: -40px;
+    font-size: 1.4rem;
+    animation: fall linear infinite;
+    opacity: 0.7;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+  .shayari2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    font-style: italic;
+    color: var(--blush);
+    line-height: 1.9;
+    max-width: 440px;
+    margin: 1.5rem auto 0;
+  }
+
+  /* ── PAGE 5 — PROPOSAL ── */
+  #p5 {
+    background: radial-gradient(ellipse at center, #2a0d3f 0%, #0d0714 70%);
+    z-index: 1;
+  }
+  .proposal-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 10vw, 5.5rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--blush);
+    line-height: 1;
+    animation: nameGlow 2s ease-in-out infinite alternate;
+  }
+  @keyframes nameGlow {
+    from { text-shadow: 0 0 20px #e8a0bf66; }
+    to { text-shadow: 0 0 50px #e8a0bfcc, 0 0 80px #e8a0bf44; }
+  }
+  .love-line {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 1rem 0 0.4rem;
+  }
+  .proposal-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 6vw, 3.2rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1.3;
+    margin: 0.5rem 0 2rem;
+  }
+  .ring { font-size: 3rem; animation: ringFloat 2.5s ease-in-out infinite; }
+  @keyframes ringFloat {
+    0%,100%{transform:translateY(0) rotate(-5deg);}
+    50%{transform:translateY(-10px) rotate(5deg);}
+  }
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn-yes {
+    padding: 0.8rem 2.4rem;
+    background: var(--blush);
+    color: var(--night);
+    border: none;
+    border-radius: 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-yes:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 24px #e8a0bf66;
+  }
+  .btn-no {
+    padding: 0.8rem 2.4rem;
+    background: transparent;
+    color: var(--dim);
+    border: 1px solid rgba(253,246,255,0.2);
+    border-radius: 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: transform 0.2s ease;
+    position: relative;
+  }
+
+  /* ── PAGE 6 — YES ── */
+  #p6 { background: radial-gradient(ellipse at center, #28073d 0%, #080510 70%); z-index: 1; }
+  .yes-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 7vw, 4rem);
+    font-style: italic;
+    color: var(--gold);
+    animation: nameGlow 2s ease-in-out infinite alternate;
+  }
+  .yes-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    font-style: italic;
+    color: var(--blush);
+    margin-top: 1rem;
+    line-height: 1.9;
+    max-width: 440px;
+  }
+  .fireworks { font-size: 2rem; animation: popIn 0.5s ease; }
+  @keyframes popIn {
+    0%{transform:scale(0.3);opacity:0}
+    80%{transform:scale(1.1)}
+    100%{transform:scale(1);opacity:1}
+  }
+
+  /* ── NEXT BTN ── */
+  .next-btn {
+    margin-top: 2.5rem;
+    padding: 0.65rem 2rem;
+    background: transparent;
+    border: 1px solid rgba(253,246,255,0.25);
+    border-radius: 2rem;
+    color: var(--dim);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+    z-index: 2;
+    position: relative;
+  }
+  .next-btn:hover { border-color: var(--blush); color: var(--blush); }
+
+  /* ── PROGRESS DOTS ── */
+  .dots {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+  .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(253,246,255,0.2);
+    transition: background 0.4s, transform 0.4s;
+  }
+  .dot.on { background: var(--blush); transform: scale(1.4); }
+
+  /* ── FROM label ── */
+  .from-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-top: 0.4rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- PROGRESS DOTS -->
+<div class="dots" id="dots"></div>
+
+<!-- PAGE 1: ENVELOPE -->
+<div class="page active" id="p1">
+  <p class="glow-text">Tumhare liye kuch khaas hai...</p>
+  <div class="envelope" id="env" onclick="goTo(1)" title="Open">💌</div>
+  <p class="p1-hint">tap to open</p>
+</div>
+
+<!-- PAGE 2: SHAYARI 1 -->
+<div class="page" id="p2">
+  <div class="shayari-block">
+    <p class="shayari" id="sh1">
+      Aankhon mein teri <span>khwab</span> basate hain,<br>
+      Dil ke har kone mein <span>tum</span> nazar aate ho.
+    </p>
+    <div class="divider"></div>
+    <p class="shayari" id="sh2">
+      Sirf ek baar mil gayi thi nazar,<br>
+      Par dil ne maana — <span>yahi hai mera ghar.</span>
+    </p>
+    <button class="next-btn" onclick="goTo(2)">Aage chalein →</button>
+  </div>
+</div>
+
+<!-- PAGE 3: GIFT BOX -->
+<div class="page" id="p3">
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--dim);margin-bottom:2rem;">
+    Ek surprise hai tumhare liye...
+  </p>
+  <div class="gift-wrap" id="giftWrap" onclick="openGift()">
+    <span class="gift-box" id="giftBox">🎁</span>
+    <p class="gift-label">tap to unwrap</p>
+  </div>
+</div>
+
+<!-- PAGE 4: REVEAL -->
+<div class="page" id="p4">
+  <div class="heart-rain" id="heartRain"></div>
+  <div style="position:relative;z-index:2;">
+    <p class="reveal-title">Tumhara surprise</p>
+    <p class="surprise-text">Meri dua, meri dunia,<br>meri Yashi — 🌙</p>
+    <div class="divider"></div>
+    <p class="shayari2">
+      Raat ke taaron se maanga hai tumhe,<br>
+      Har ek sapne mein saja ke rakha hai.<br>
+      <span style="color:var(--gold)">Koi aur nahi chahiye mujhe —<br>
+      bas tera saath maanga hai.</span>
+    </p>
+    <button class="next-btn" onclick="goTo(4)" style="margin-top:2rem;">Aur kuch hai...</button>
+  </div>
+</div>
+
+<!-- PAGE 5: PROPOSAL -->
+<div class="page" id="p5">
+  <span class="ring">💍</span>
+  <p class="love-line">Dil ki awaaz</p>
+  <h1 class="proposal-name">Yashi,</h1>
+  <p class="proposal-main">
+    Will you marry me?
+  </p>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--dim);font-size:1rem;max-width:380px;line-height:1.8;">
+    Tujhse mohabbat karna sab se aasaan kaam hai —<br>
+    ab tere bina jeena mushkil ho gaya.
+  </p>
+  <div class="btn-row">
+    <button class="btn-yes" onclick="sayYes()">Haan 💖</button>
+    <button class="btn-no" id="noBtn" onmouseover="runAway(this)" ontouchstart="runAway(this)">Sochu...</button>
+  </div>
+  <p class="from-tag">— Ayush</p>
+</div>
+
+<!-- PAGE 6: YES -->
+<div class="page" id="p6">
+  <div class="heart-rain" id="heartRain2"></div>
+  <div style="position:relative;z-index:2;">
+    <div class="fireworks">🎉✨💫🎊</div>
+    <p class="yes-title">Shukriya, Yashi! 💍</p>
+    <p class="yes-sub">
+      Ab se tera haath thame chalenge,<br>
+      har rah pe, har mod pe — saath saath.<br><br>
+      <span style="color:var(--gold)">
+        Tumhara naam meri duniya ka sabse khoobsurat lafz hai.
+      </span>
+    </p>
+    <p class="from-tag" style="margin-top:1.5rem;">— Tumhara Ayush 🌙</p>
+  </div>
+</div>
+
+<script>
+  // ── STARS ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;width:${Math.random()<0.3?3:2}px;height:${Math.random()<0.3?3:2}px;`;
+    starsEl.appendChild(s);
+  }
+
+  // ── PAGES ──
+  const pages = ['p1','p2','p3','p4','p5','p6'];
+  let current = 0;
+
+  // DOTS
+  const dotsEl = document.getElementById('dots');
+  pages.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' on':'');
+    d.id = 'dot'+i;
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(idx) {
+    document.getElementById(pages[current]).classList.remove('active');
+    document.getElementById('dot'+current).classList.remove('on');
+    current = idx;
+    document.getElementById(pages[current]).classList.add('active');
+    document.getElementById('dot'+current).classList.add('on');
+    onPageEnter(idx);
+  }
+
+  function onPageEnter(idx) {
+    if (idx === 1) animateShayari();
+    if (idx === 3) spawnHearts('heartRain');
+    if (idx === 5) spawnHearts('heartRain2');
+  }
+
+  // ── SHAYARI ANIMATION ──
+  function animateShayari() {
+    const s1 = document.getElementById('sh1');
+    const s2 = document.getElementById('sh2');
+    s1.classList.remove('visible'); s2.classList.remove('visible');
+    setTimeout(() => s1.classList.add('visible'), 200);
+    setTimeout(() => s2.classList.add('visible'), 900);
+  }
+
+  // ── GIFT ──
+  let giftOpened = false;
+  function openGift() {
+    if (giftOpened) return;
+    const box = document.getElementById('giftBox');
+    box.classList.add('shake');
+    setTimeout(() => {
+      box.textContent = '✨';
+      box.style.fontSize = '4rem';
+      setTimeout(() => goTo(3), 600);
+    }, 500);
+    giftOpened = true;
+  }
+
+  // ── HEART RAIN ──
+  function spawnHearts(containerId) {
+    const c = document.getElementById(containerId);
+    c.innerHTML = '';
+    const emojis = ['💜','🌸','✨','💕','🌙','💍','🌺'];
+    for (let i = 0; i < 18; i++) {
+      const h = document.createElement('div');
+      h.className = 'falling-heart';
+      h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      h.style.cssText = `left:${Math.random()*100}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;font-size:${0.9+Math.random()*1.2}rem;`;
+      c.appendChild(h);
+    }
+  }
+
+  // ── NO BTN RUNAWAY ──
+  function runAway(btn) {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const x = Math.random()*vw*0.6 - vw*0.3;
+    const y = Math.random()*vh*0.6 - vh*0.3;
+    btn.style.transform = `translate(${x}px,${y}px)`;
+    btn.style.transition = 'transform 0.4s ease';
+  }
+
+  // ── YES ──
+  function sayYes() {
+    goTo(5);
+  }
+</script>
+</body>
+</html>
